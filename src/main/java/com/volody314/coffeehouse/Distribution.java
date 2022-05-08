@@ -1,2 +1,7 @@
-package com.volody314.coffeehouse;public class Distribution {
+package com.volody314.coffeehouse;
+
+/** Выдача
+ *
+ */
+public class Distribution {
 }

@@ -1,2 +1,7 @@
-package com.volody314.coffeehouse;public class Production {
+package com.volody314.coffeehouse;
+
+/**
+ * Приготовление
+ */
+public class Production {
 }
