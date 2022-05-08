@@ -26,14 +26,11 @@ public class OrderController {
     public ResponseEntity<List<Item>> read(@PathVariable(name = "id") Integer id) {
         System.out.println(" *** Get-ting *** " + id);
         final List<Item> items = orders.read(id);
-        System.out.println(" *** Get-ting *** " + items.get(0).name + " " + items.get(0).prise + " " + items.get(0).count);
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
     @PutMapping(value = "/orders/{id}")
     public ResponseEntity<Integer> putItem(@PathVariable(name = "id") Integer id, @RequestBody Item item) {
-        System.out.println(" *** Put-ting *** " + item.name + " " + item.prise + " " + item.count);
-        //orders.putItem(id, item);
         return new ResponseEntity<>(orders.putItem(id, item), HttpStatus.OK);
     }
 
@@ -42,5 +39,4 @@ public class OrderController {
                                                   @PathVariable(name = "itId") Integer itemId) {
         return new ResponseEntity<>(orders.deleteItem(orderId, itemId), HttpStatus.OK);
     }
-    // void deleteItem(Integer orderId, String itemName);
 }

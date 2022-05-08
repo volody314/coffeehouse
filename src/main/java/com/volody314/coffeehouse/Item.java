@@ -4,7 +4,32 @@ package com.volody314.coffeehouse;
  * Позиция заказа
  */
 public class Item {
-    String name;    // Название
-    Float prise;    // Цена
-    Integer count;  // Количество
+    private String name;    // Название
+    private Float prise;    // Цена
+    private Integer count;  // Количество
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Float getPrise() {
+        return prise;
+    }
+
+    public void setPrise(Float prise) {
+        this.prise = prise;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
 }
