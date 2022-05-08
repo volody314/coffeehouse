@@ -16,9 +16,12 @@ public class OrdersImpl implements Orders {
 
     // Хранилище заказов
     private static final Map<Integer, Order> ORDER_REPOSITORY_MAP = new HashMap<>();
+    private static final Map<Integer, Order> PRODUCTION_REPOSITORY_MAP = new HashMap<>();
+    private static final Map<Integer, Order> DISTRIBUTION_REPOSITORY_MAP = new HashMap<>();
 
     // Генератор ID заказа
     private static final AtomicInteger ORDER_ID_HOLDER = new AtomicInteger();
+
 
     @Override
     public Integer create() {
@@ -40,11 +43,61 @@ public class OrdersImpl implements Orders {
 
     @Override
     public List<Item> deleteItem(Integer orderId, Integer itemId) {
+        //System.out.println("Deleting item "+itemId+" in order"+orderId);
         return ORDER_REPOSITORY_MAP.get(orderId).deleteItem(itemId);
     }
 
     @Override
-    public void produceOrder(Integer orderId) {
+    public boolean produceOrder(Integer orderId) {
+        Order order = ORDER_REPOSITORY_MAP.get(orderId);
+        if (order != null) {
+            PRODUCTION_REPOSITORY_MAP.put(orderId, order);
+            ORDER_REPOSITORY_MAP.remove(orderId);
+            return true;
+        } else return false;
+    }
 
+    @Override
+    public boolean distributeOrder(Integer orderId) {
+        Order order = PRODUCTION_REPOSITORY_MAP.get(orderId);
+        if (order != null) {
+            DISTRIBUTION_REPOSITORY_MAP.put(orderId, order);
+            PRODUCTION_REPOSITORY_MAP.remove(orderId);
+            return true;
+        } else return false;
+    }
+
+    @Override
+    public List<Integer> showProduced() {
+        //return PRODUCTION_REPOSITORY_MAP.size();
+        return new ArrayList<>(PRODUCTION_REPOSITORY_MAP.keySet());
+    }
+
+    @Override
+    public List<Integer> showDistribution() {
+        //return DISTRIBUTION_REPOSITORY_MAP.size();
+        return new ArrayList<>(DISTRIBUTION_REPOSITORY_MAP.keySet());
+    }
+
+    @Override
+    public void closeOrder(Integer orderId) {
+        PRODUCTION_REPOSITORY_MAP.remove(orderId);
+        DISTRIBUTION_REPOSITORY_MAP.remove(orderId);
+        ORDER_REPOSITORY_MAP.remove(orderId);
+    }
+
+    @Override
+    public boolean orderExists(Integer orderId) {
+        return ORDER_REPOSITORY_MAP.containsKey(orderId);
+    }
+
+    @Override
+    public boolean productExists(Integer orderId) {
+        return PRODUCTION_REPOSITORY_MAP.containsKey(orderId);
+    }
+
+    @Override
+    public boolean distribExists(Integer orderId) {
+        return DISTRIBUTION_REPOSITORY_MAP.containsKey(orderId);
     }
 }

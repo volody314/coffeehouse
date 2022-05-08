@@ -6,10 +6,10 @@ import java.util.ArrayList;
  * Заказ
  */
 public class Order {
-    private Integer id; // Идентификатор заказа
+    private final Integer id; // Идентификатор заказа
     //private Float overralSum = 0.0;  // Сумма чека
     private Integer posCounter = 0; // Счётчик позиций
-    private ArrayList<Item> items = new ArrayList<>();  // Позиции заказа
+    private final ArrayList<Item> items = new ArrayList<>();  // Позиции заказа
 
 
     public Order(Integer id_) {
@@ -36,15 +36,28 @@ public class Order {
     public Integer addItem(Item item) {
         //this.overralSum += item.prise * item.count;
         this.items.add(item);
+        itemsRenumerate();
         return posCounter++;
     }
 
-    public ArrayList<Item> deleteItem(Integer toDel) {
+    public ArrayList<Item> deleteItem(int toDel) {
         if (toDel < this.items.size()) {
             //overralSum -= this.items.get(toDel).prise * this.items.get(toDel).count;
+            //System.out.println("Deleting item "+toDel);
             this.items.remove(toDel);
             posCounter--;
+            itemsRenumerate();
         }
         return this.items;
+    }
+
+    /**
+     * Проставляет актуальные номера позиций в заказе, необходимые для выдачи клиенту,
+     * чтоб указать номер удаляемой позиции
+     */
+    private void itemsRenumerate() {
+        for (int i = 0; i < items.size(); ++i) {
+            items.get(i).setId(i);
+        }
     }
 }

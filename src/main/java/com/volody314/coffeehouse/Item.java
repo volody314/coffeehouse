@@ -4,9 +4,18 @@ package com.volody314.coffeehouse;
  * Позиция заказа
  */
 public class Item {
+    private Integer id;     // Номер позиции
     private String name;    // Название
     private Float prise;    // Цена
     private Integer count;  // Количество
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
